@@ -31,10 +31,12 @@ def setContent():
             openFile()
         elif inp == "[cp":
             setCursorPosition()
+        elif inp == "[sc":
+            showContent()
 
         elif inp[0] == "]":
             log.append(inp)
-            
+
         else:
             content = "{}{}{}".format(content[:int(pos)], inp, content[int(pos):])
             log.append(inp)
@@ -79,6 +81,10 @@ def resetContent():
     global content
     content = ""
 
+def showContent():
+    global content
+    print(content)
+
 def setFilePath():
     global filePath
     filePath = input("( ")
@@ -94,22 +100,23 @@ def showDocumentation():
     printLogo()
 
     print("\nFile commands")
-    print("[fp (file path), sets file path (must writed to save/open files) (required params: path to file)")
-    print("[fu (file update), saves files with content what you write")
-    print("[of (open file), open file with path what setted with [sfp, content sets to file text")
+    print("[fp (file path), sets file path (required params: path to file)")
+    print("[fu (file update), sets file text to current content")
+    print("[of (open file), open file with current path, content sets to file text")
 
     print("\nApp commands")
-    print("[efa (exit from app), closes app")
-    print("[cc (clear console), cleares console")
+    print("[efa (exit from app), command to close app")
+    print("[cc (clear console), command to cleare console")
 
     print("\nText commands")
+    print("[sc (show content), prints all content")
     print("[cp (cursor position), sets cursor position (required params: position (symbol number))")
-    print("[rc (reset content), reset all content what you writed")
+    print("[rc (reset content), reset all content")
     print("[u (undo), delete one of needed string inside of content (required params: text to delete)")
 
     print("\nSymbols used in program")
     print("\"(\" program wait until user write needed params to command")
-    print("\")\" program showed something went wrong and nothing happend from your command")
+    print("\")\" program shows error, you make something wrong")
     print("\"[\" used to execute commands")
     print("\"]\" comment, program ignore this line")
     

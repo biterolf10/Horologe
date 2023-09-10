@@ -1,4 +1,5 @@
 import os
+import art
 
 content: str = ""
 filePath: str = ""
@@ -11,23 +12,25 @@ def setContent():
     while 1:
         inp = input("")
 
-        if inp == ";efa":
+        if inp == "[efa":
             break
-        elif inp == ";fu":
+        elif inp == "[fu":
             fileUpd()
-        elif inp == ";sfp":
+        elif inp == "[sfp":
             setFilePath()
-        elif inp == ";u":
+        elif inp == "[u":
             undo()
-        elif inp == ";sd":
+        elif inp == "[sd":
             showDocumentation()
-        elif inp == ";cc":
+        elif inp == "[cc":
             os.system("cls")
-        elif inp == ";rc":
+        elif inp == "[rc":
             resetContent()
-        elif inp == ";of":
+        elif inp == "[of":
             openFile()
 
+        elif inp[0] == "]":
+            log.append(inp)
         else:
             content += inp + "\n"
             log.append(inp)
@@ -36,25 +39,31 @@ def fileUpd():
     global filePath
     global content
 
-    with open(filePath, "w") as f:
-        f.writelines(content)
-        f.close()
+    if filePath != "":
+        with open(filePath, "w") as f:
+            f.writelines(content)
+            f.close()
+    else:
+        print(")\n")
 
 def openFile():
     global filePath
     global content
     global log
 
-    with open(filePath, "r") as f:
-        for line in f.readlines():
-            content += line
-            log.append(line.strip())
+    if filePath != "":
+        with open(filePath, "r") as f:
+            for line in f.readlines():
+                content += line
+                log.append(line.strip())
+    else:
+        print(")\n")
 
 def undo():
     global log
     global content
 
-    findText = input(": ")
+    findText = input("( ")
 
     for i, v in enumerate(log):
         if v == findText:
@@ -68,33 +77,30 @@ def resetContent():
 
 def setFilePath():
     global filePath
-    filePath = input(": ")
+    filePath = input("( ")
 
 def printLogo():
-    global fileName
-    print("                                               \n" +
-          "  _    _                       _               \n" +
-          " | |  | |                     | |              \n" +
-          " | |__| | ___  _   _ _ __ __ _| | __ _ ___ ___ \n" +
-          " |  __  |/ _ || | | | '__/ _` | |/ _` / __/ __|\n" +
-          " | |  | | (_) | |_| | | | (_| | | (_| |__ |__ |\n" +
-          " |_|  |_||___/ |__,_|_|  |__, |_||__,_|___/___/\n" +
-          "                          __/ |                \n" +
-          "                         |___/                 \n" +
-          "                                               \n")
+    art.tprint("Hourglass", space=1)
 
 def showDocumentation():
     printLogo()
 
     print("\nFile commands")
-    print(";sfp (set file path), save file path to insert what you write after command ;sf")
-    print(";fu (file update), saves files with content what you write")
-    print(";rc (reset content), reset all what you write and after save nothing will be saved")
-    print(";u (undo), delete one of needed string inside of content")
+    print("[sfp (set file path), sets file path (must writed to save/open files) (required params: path to file)")
+    print("[fu (file update), saves files with content what you write")
+    print("[rc (reset content), reset all content what you writed")
+    print("[of (open file), open file with path what setted with [sfp, content sets to file text")
+    print("[u (undo), delete one of needed string inside of content (required params: text to delete)")
 
     print("\nApp commands")
-    print(";cc (clear console), cleares whole console")
-    print(";efa (exit from app), close app and asks before it save file or not")
+    print("[efa (exit from app), closes app")
+    print("[cc (clear console), cleares console")
+
+    print("\nSymbols used in program")
+    print("\"( \"program wait until user write needed params to command")
+    print("\") \"program showed something went wrong and nothing happend from your command")
+    print("\"[ \"used to execute commands")
+    print("\"] \"comment, program ignore this line")
     
 
 def main():

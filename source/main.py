@@ -1,7 +1,7 @@
 import os
 import art
 
-pos = ""
+pos = "0"
 content: str = ""
 filePath: str = ""
 log = []

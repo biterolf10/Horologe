@@ -37,10 +37,13 @@ def setContent():
         elif len(inp) >= 1:
             if inp[0] == "]":
                 log.append(inp)
-
-        else:
-            content = "{}{}{}".format(content[:int(pos)], inp, content[int(pos):])
-            log.append(inp)
+            else:
+                if int(pos) != 0:
+                    content = "{}{}{}\n".format(content[:int(pos)], inp, content[int(pos):])
+                    log.append(inp)
+                else:
+                    content = content + inp + "\n"
+                    log.append(inp)
 
 def fileUpd():
     global filePath
@@ -51,7 +54,7 @@ def fileUpd():
             f.writelines(content)
             f.close()
     else:
-        print(")\n")
+        input(")\n")
 
 def openFile():
     global filePath
@@ -64,7 +67,7 @@ def openFile():
                 content += line
                 log.append(line.strip())
     else:
-        print(")\n")
+        input(")\n")
 
 def undo():
     global log
@@ -117,7 +120,7 @@ def showDocumentation():
 
     print("\nSymbols used in program")
     print("\"(\" program wait until user write needed params to command")
-    print("\")\" program shows error, you make something wrong")
+    print("\")\" program showing error")
     print("\"[\" used to execute commands")
     print("\"]\" comment, program ignore this line")
     

@@ -1,6 +1,7 @@
 import os
 import art
 
+debugMode = False
 pos = "0"
 content: str = ""
 filePath: str = ""
@@ -33,6 +34,14 @@ def setContent():
             setCursorPosition()
         elif inp == "[sc":
             showContent()
+        elif inp == "[rl":
+            replaceLine()
+        elif inp == "[dm":
+            enterDebugMode()
+        elif inp == "[pl":
+            printLog()
+        elif inp == "[pp":
+            printPath()
 
         elif len(inp) >= 1:
             if inp[0] == "]":
@@ -69,6 +78,21 @@ def openFile():
     else:
         input(")\n")
 
+def replaceLine():
+    global filePath
+    global content
+    global log
+
+    oldLine = input("( ")
+    newLine = input("( ")
+
+    for i, v in enumerate(log):
+        if v == oldLine:
+            if v in content:
+                content = content.replace(v, newLine)
+                log[i] = newLine
+                break
+
 def undo():
     global log
     global content
@@ -79,6 +103,7 @@ def undo():
         if v == findText:
             if v in content:
                 content = content.replace(v, "")
+                log.pop[i]
                 break
 
 def resetContent():
@@ -97,8 +122,31 @@ def setCursorPosition():
     global pos
     pos = input("( ")
 
+def enterDebugMode():
+    global debugMode
+
+    if debugMode != True:
+        correctPasswd = "246"
+        inputPasswd = input("( ")
+        if correctPasswd == inputPasswd:
+            debugMode = True
+
+def printLog():
+    global log
+    global debugMode
+
+    if debugMode == True:
+        print(log)
+
+def printPath():
+    global filePath
+    global debugMode
+    
+    if debugMode == True:
+        print(filePath)
+
 def printLogo():
-    art.tprint("Hourglass", space=1)
+    art.tprint("Horologe", space=1)
 
 def showDocumentation():
     printLogo()
@@ -116,6 +164,7 @@ def showDocumentation():
     print("[sc (show content), prints all content")
     print("[cp (cursor position), sets cursor position (required params: position (symbol number))")
     print("[rc (reset content), reset all content")
+    print("[rl (replace line), replace one line by another (required params: old line, new line)")
     print("[u (undo), delete one of needed string inside of content (required params: text to delete)")
 
     print("\nSymbols used in program")

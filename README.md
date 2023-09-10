@@ -1,6 +1,4 @@
-# Hourglass
-
-CLI text editor
+# Horologe, The CLI text editor
 
 ## How to use
 

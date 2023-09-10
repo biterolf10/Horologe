@@ -1,1 +1,0 @@
-def main():	print(10 + 15)

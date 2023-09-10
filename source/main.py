@@ -34,8 +34,9 @@ def setContent():
         elif inp == "[sc":
             showContent()
 
-        elif inp[0] == "]":
-            log.append(inp)
+        elif len(inp) >= 1:
+            if inp[0] == "]":
+                log.append(inp)
 
         else:
             content = "{}{}{}".format(content[:int(pos)], inp, content[int(pos):])
